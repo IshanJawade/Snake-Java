@@ -8,7 +8,7 @@ public class App {
         int boardHeight = boardWidth;
 
         // Define a frame
-        JFrame frame = new JFrame("Snake");
+        JFrame frame = new JFrame("Snake v0.1");
         frame.setVisible(true);                  // make frame visible
         frame.setSize(boardWidth, boardHeight);    // frame resolution
         frame.setLocationRelativeTo(null);       // spawn the fame in the middle of the screen
