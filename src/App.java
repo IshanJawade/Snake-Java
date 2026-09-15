@@ -21,5 +21,7 @@ public class App {
         frame.add(snakeGame);
         // To make the widow-size what we intended without title bar of the window
         frame.pack();
+        // Make SnakeGame to request key presses
+        snakeGame.requestFocus();
     }
 }

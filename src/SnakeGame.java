@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 
-public class SnakeGame extends JPanel implements ActionListener{
+public class SnakeGame extends JPanel implements ActionListener, KeyListener{
 
     // Divide the window in 24x24 tiles to move the snake
     // Each tile is 25x25 pixels 
@@ -45,6 +45,7 @@ public class SnakeGame extends JPanel implements ActionListener{
         // Make a JPanel of the disired diamention
         setPreferredSize( new Dimension(this.boardWidth, this.boardHeight) );
         setBackground(Color.BLACK);
+        addKeyListener(this);
 
         // One example of the default position of the snakeHead and the food
         snakeHead = new Tile(5,5);
@@ -56,8 +57,8 @@ public class SnakeGame extends JPanel implements ActionListener{
         velocityX = 0;
         velocityY = -1;
 
-        // Run the game loop
-        gameLoop = new Timer(400, this);
+        //  The timer that runs game loop (tik)
+        gameLoop = new Timer(128, this);
         gameLoop.start();
 
     }
@@ -115,5 +116,44 @@ public class SnakeGame extends JPanel implements ActionListener{
         
         move();
         repaint();
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+        // UP 
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            velocityX = 0;
+            velocityY = -1;
+        } 
+        // DOWN
+        else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+            velocityX = 0;
+            velocityY = 1;
+        }
+        // LEFT
+        else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            velocityX = -1;
+            velocityY = 0;
+        }
+        // RIGHT
+        else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            velocityX = 1;
+            velocityY = 0;
+        }
+    }
+    
+    /*
+        We don't need these methods!!
+    */
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
