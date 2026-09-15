@@ -47,26 +47,41 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         // Make a JPanel of the disired diamention
         setPreferredSize( new Dimension(this.boardWidth, this.boardHeight) );
         setBackground(Color.BLACK);
-        addKeyListener(this);
 
-        // Initialization 
-        gameOver = false;
-        snakeHead = new Tile(1,3);  // Snake's default spawn position
-        food = new Tile();
-        snakeBody = new ArrayList<Tile>();
-        snakeBody.add(new Tile(0, 3));
-
-        random = new Random();
-        placeFood();    // give random values to food
-
-        // Snake default move direction after spawn
-        velocityX = 1;
-        velocityY = 0;
+        // make this JPanel to listen to key presses
+        addKeyListener(this);   
+        
+        // Call the start game function 
+        startGame();
 
         //  The timer that runs game loop (tik)
         gameLoop = new Timer(128, this);
-        // gameLoop.start(); {"" This statement moved to "keyPressed" method ""}
+    }
 
+    // Reinstate all the starting states 
+    public void startGame(){
+
+        // Initialize game logic variables
+        gameOver = false;
+
+        // Snake default move direction after spawn
+        snakeHead = new Tile(1,3);
+
+        // Make snake body
+        snakeBody = new ArrayList<>();
+        snakeBody.add(new Tile(0, 3));
+
+        // Set default direction to move
+        velocityX = 1;
+        velocityY = 0;
+
+        // Spawn food on random position
+        random = new Random();
+        food = new Tile();
+        placeFood();
+
+        // Repaint the JPlane
+        repaint();
     }
 
     // Built-In Swing mwthod to call when JPlane renders for the firs time
@@ -115,6 +130,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
             g.drawString("Game Over!",16, 25);
             g.setColor(Color.WHITE);
             g.drawString("Score: " + String.valueOf(snakeBody.size() - 1), 16, 50);
+            g.setColor(Color.GREEN);
+            g.drawString("Press ESCAPE to restart...", 16, 100);
         }
         // to show the score while game is going on 
         else {
@@ -128,8 +145,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
             g.drawString("Instrctions: ", 16, tileSize * 20);
             g.drawString("> Press arrow keys to change directions", 16, tileSize * 21);
             g.drawString("> Press ENTER / RETURN to start", 16, tileSize * 22);
-            
         }
+
     }
 
     // Place food randomly on the grid
@@ -245,11 +262,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
             // Starts game loop
             gameLoop.start();
         }
-
         // Restart instatnt for debugging
-        // else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-        //     SnakeGame(boardWidth, boardHeight);
-        // }
+        else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+            startGame();
+            gameLoop.start();
+        }
     }
     
     /*
