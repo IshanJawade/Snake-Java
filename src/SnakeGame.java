@@ -120,24 +120,28 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
     
     @Override
     public void keyPressed(KeyEvent e) {
-        
+        /* 
+            Make key presses change the direction od the snake 
+            And make sure the snake should not go the completelt opposite direction its
+            already going on. Ex: Can't go directly right if the snake is going left.
+         */
         // UP 
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
+        if (e.getKeyCode() == KeyEvent.VK_UP && velocityY != 1) {
             velocityX = 0;
             velocityY = -1;
         } 
         // DOWN
-        else if(e.getKeyCode() == KeyEvent.VK_DOWN){
+        else if(e.getKeyCode() == KeyEvent.VK_DOWN && velocityY != -1){
             velocityX = 0;
             velocityY = 1;
         }
         // LEFT
-        else if(e.getKeyCode() == KeyEvent.VK_LEFT){
+        else if(e.getKeyCode() == KeyEvent.VK_LEFT && velocityX != 1){
             velocityX = -1;
             velocityY = 0;
         }
         // RIGHT
-        else if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+        else if(e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1){
             velocityX = 1;
             velocityY = 0;
         }
