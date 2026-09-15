@@ -29,6 +29,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
     
     // Tile class
     Tile snakeHead; // snake
+    ArrayList<Tile> snakeBody;
     Tile food;      // food
 
     // Game logic
@@ -47,9 +48,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         setBackground(Color.BLACK);
         addKeyListener(this);
 
-        // One example of the default position of the snakeHead and the food
+        // Initialization 
         snakeHead = new Tile(5,5);
         food = new Tile();
+        snakeBody = new ArrayList<Tile>();
 
         random = new Random();
         placeFood();    // give random values to food
@@ -87,9 +89,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         g.setColor(Color.RED);
         g.fillRect(food.x * tileSize, food.y*tileSize, tileSize, tileSize);
         
-        // Draw snake:
+        // Draw snake head:
         g.setColor(Color.green);
         g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
+
+        // Draw snake body
+        for(int i=0; i<snakeBody.size(); i++){
+
+            // Take one square
+            Tile snakePart = snakeBody.get(i);
+            // draw this part
+            g.fillRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize);
+        }
         
     }
 
@@ -103,7 +114,24 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         food.y = random.nextInt(boardHeight / tileSize);
     }
 
+    // To detect collision 
+    public boolean collision(Tile tile1, Tile tile2){
+
+        // If 2 tiles have same position then thats the Collision!
+        return tile1.x == tile2.x && tile1.y == tile2.y; 
+    }
+
+    // Update the moves on every tik
     public void move(){
+
+        // Eat Food : check collision between snakehead and food 
+        if(collision(snakeHead, food)){
+
+            snakeBody.add(new Tile(food.x, food.y));
+            placeFood();    // spawn new random food
+        }
+
+        
         
         // Snake head:
         // Adding the number feels like velocity 
@@ -118,6 +146,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         repaint();
     }
     
+    // Map key presses to snake changing directions
     @Override
     public void keyPressed(KeyEvent e) {
         /* 
