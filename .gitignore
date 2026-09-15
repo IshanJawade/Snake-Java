@@ -1,11 +1,13 @@
 # Compiled Java files
 *.class
 
+
 # Build output
 bin/
 out/
 build/
 target/
+dist/
 
 # IntelliJ IDEA
 .idea/
