@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 
-public class SnakeGame extends JPanel {
+public class SnakeGame extends JPanel implements ActionListener{
 
     // Divide the window in 24x24 tiles to move the snake
     // Each tile is 25x25 pixels 
@@ -25,14 +25,18 @@ public class SnakeGame extends JPanel {
 
     int boardWidth, boardHeight;
     int tileSize = 25;      // each tile size
-    
-    // Snake
-    Tile snakeHead;
-    // Food
-    Tile food;
     Random random;
+    
+    // Tile class
+    Tile snakeHead; // snake
+    Tile food;      // food
 
+    // Game logic
+    Timer gameLoop;
+    int velocityX;
+    int velocityY;
 
+    // Contructor 
     SnakeGame(int boardWidth, int boardHeight){
 
         this.boardWidth = boardWidth;
@@ -49,15 +53,23 @@ public class SnakeGame extends JPanel {
         random = new Random();
         placeFood();    // give random values to food
 
+        velocityX = 0;
+        velocityY = -1;
+
+        // Run the game loop
+        gameLoop = new Timer(400, this);
+        gameLoop.start();
+
     }
 
-    
-    // To draw things on the screen
+    // Built-In Swing mwthod to call when JPlane renders for the firs time
+    @Override 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         draw(g);
     }
     
+    // To draw things on the screen
     public void draw(Graphics g){
         
         // Draw grid lines: 
@@ -88,5 +100,20 @@ public class SnakeGame extends JPanel {
         */
         food.x = random.nextInt(boardWidth / tileSize);    
         food.y = random.nextInt(boardHeight / tileSize);
+    }
+
+    public void move(){
+        
+        // Snake head:
+        // Adding the number feels like velocity 
+        snakeHead.x += velocityX;
+        snakeHead.y += velocityY;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        move();
+        repaint();
     }
 }
