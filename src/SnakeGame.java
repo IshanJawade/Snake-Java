@@ -51,10 +51,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
 
         // Initialization 
         gameOver = false;
-        snakeHead = new Tile(1,0);  // Snake's default spawn position
+        snakeHead = new Tile(1,3);  // Snake's default spawn position
         food = new Tile();
         snakeBody = new ArrayList<Tile>();
-        snakeBody.add(new Tile());
+        snakeBody.add(new Tile(0, 3));
 
         random = new Random();
         placeFood();    // give random values to food
@@ -65,7 +65,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
 
         //  The timer that runs game loop (tik)
         gameLoop = new Timer(128, this);
-        gameLoop.start();
+        // gameLoop.start(); {"" This statement moved to "keyPressed" method ""}
 
     }
 
@@ -81,13 +81,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         
         // Draw grid lines: 
         // change the color for the gridlines on the black baground by default it's black
-        g.setColor(Color.DARK_GRAY);    
-        for(int i=0; i<boardWidth * tileSize; i++){
-            //   from , to   
-            // (x1, y1, x2, y2)
-            g.drawLine(i*tileSize,0 , i*tileSize, boardHeight);   // horizontal
-            g.drawLine(0, i*tileSize, boardWidth, i*tileSize);    // vertical 
-        }
+        // g.setColor(Color.DARK_GRAY);    
+        // for(int i=0; i<boardWidth * tileSize; i++){
+        //     //   from , to   
+        //     // (x1, y1, x2, y2)
+        //     g.drawLine(i*tileSize,0 , i*tileSize, boardHeight);   // horizontal
+        //     g.drawLine(0, i*tileSize, boardWidth, i*tileSize);    // vertical 
+        // }
         
         // Draw food
         g.setColor(Color.RED);
@@ -106,7 +106,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
             g.fill3DRect(snakePart.x * tileSize, snakePart.y * tileSize, tileSize, tileSize, true);
         }
         
-        // Draw score
+        // Draw score:
         g.setFont( new Font("Arial", Font.PLAIN, 16));
 
         // after game over
@@ -119,7 +119,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         // to show the score while game is going on 
         else {
             g.setColor(Color.GREEN);
-            g.drawString("Score: " + String.valueOf(snakeBody.size() - 1), 6, 25);
+            g.drawString("Score: " + String.valueOf(snakeBody.size() - 1), 16, 25);
+        }
+
+        // Draw instructions:
+        if(!gameOver && !gameLoop.isRunning()){
+            g.setColor(Color.GREEN);
+            g.drawString("Instrctions: ", 16, tileSize * 20);
+            g.drawString("> Press arrow keys to change directions", 16, tileSize * 21);
+            g.drawString("> Press ENTER / RETURN to start", 16, tileSize * 22);
+            
         }
     }
 
@@ -230,7 +239,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         else if(e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1){
             velocityX = 1;
             velocityY = 0;
+        } 
+        // Press ENTER to start the game
+        else if(e.getKeyCode() == KeyEvent.VK_ENTER && !gameLoop.isRunning()){
+            // Starts game loop
+            gameLoop.start();
         }
+
         // Restart instatnt for debugging
         // else if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
         //     SnakeGame(boardWidth, boardHeight);
