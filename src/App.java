@@ -15,6 +15,11 @@ public class App {
         frame.setResizable(false);       // not resizable
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   // close the window after clicking on X
 
-        
+        // Calling SnakeGame class here with the object
+        SnakeGame snakeGame = new SnakeGame(boardWidth, boardHeight);
+        // Adding snakeGame object into the frame we have created
+        frame.add(snakeGame);
+        // To make the widow-size what we intended without title bar of the window
+        frame.pack();
     }
 }
