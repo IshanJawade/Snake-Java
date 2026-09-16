@@ -142,7 +142,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         // Draw instructions:
         if(!gameOver && !gameLoop.isRunning()){
             g.setColor(Color.GREEN);
-            g.drawString("Instrctions: ", 16, tileSize * 20);
+            g.drawString("Instructions: ", 16, tileSize * 20);
             g.drawString("> Press arrow keys to change directions", 16, tileSize * 21);
             g.drawString("> Press ENTER / RETURN to start", 16, tileSize * 22);
         }

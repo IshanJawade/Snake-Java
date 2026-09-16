@@ -2,7 +2,11 @@
 #### Built in Java.
 
 ## Description
-A classic Snake game implemented in Java. The game features a snake that moves around the screen, eating food to grow longer. The player controls the snake using the arrow keys.
+A classic Snake game implemented in Java. The game features a snake that moves around the screen, eating food to grow longer. The player controls the snake using the arrow keys. Aim is to achieve the highest score possible without colliding with the walls or the snake's own body.
+
+![image1](images/start.png)
+![image1](images/end.png)
+
 
 ## How to Play?
 1. Use the arrow keys to control the direction of the snake.
